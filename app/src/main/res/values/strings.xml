@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">MyNativeHomework</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Static data for the repository -->
+    <string name="payment1_totalSum">100.00</string>
+    <string name="payment2_totalSum">200.00</string>
+    <string name="payment3_totalSum">300.00</string>
+    <string name="payment4_totalSum">400.00</string>
+    <string name="payment5_totalSum">500.00</string>
+    <string name="payment6_totalSum">600.00</string>
+    <string name="payment7_totalSum">700.00</string>
+    <string name="payment8_totalSum">800.00</string>
+    <string name="payment9_totalSum">900.00</string>
+    <string name="payment10_totalSum">1000.00</string>
+
+    <string name="payment1_dueData">10.10.2022</string>
+    <string name="payment2_dueData">10.11.2022</string>
+    <string name="payment3_dueData">10.13.2022</string>
+    <string name="payment4_dueData">10.14.2022</string>
+    <string name="payment5_dueData">10.15.2022</string>
+    <string name="payment6_dueData">10.16.2022</string>
+    <string name="payment7_dueData">10.17.2022</string>
+    <string name="payment8_dueData">10.18.2022</string>
+    <string name="payment9_dueData">10.19.2022</string>
+    <string name="payment10_dueData">10.20.2022</string>
+
+    <string name="payment1_reason">Unpaid bus ticket</string>
+    <string name="payment2_reason">Parked in front of a garage</string>
+    <string name="payment3_reason">Listened to loud music at 12:00 am</string>
+    <string name="payment4_reason">Unpaid taxes</string>
+    <string name="payment5_reason">Car accident</string>
+    <string name="payment6_reason">Graffiti</string>
+    <string name="payment7_reason">Unpaid bus ticket</string>
+    <string name="payment8_reason">Talked loudly in library</string>
+    <string name="payment9_reason">Unpaid taxes</string>
+    <string name="payment10_reason">Drove without safety belt</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
