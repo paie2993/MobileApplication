@@ -16,9 +16,10 @@ data class DuePayment(
 ) {
 
     companion object {
-        private var id: Int = 0
+        private var internalId: Int = 0
 
         fun create(
+            id: Int? = null,
             totalSum: BigDecimal,
             reason: String,
             dueDate: String,
@@ -29,7 +30,7 @@ data class DuePayment(
             institution: String? = null,
             status: String? = null
         ): DuePayment = DuePayment(
-            id = id++,
+            id = id ?: internalId++,
             totalSum = totalSum,
             reason = reason,
             dueDate = dueDate,
@@ -40,12 +41,33 @@ data class DuePayment(
             institution = institution,
             status = status
         )
-
     }
 
-    val numberOfEssentialFields: Int
-        get() = 9
+    override fun equals(other: Any?): Boolean =
+        if (other is DuePayment) {
+            other.id == this.id
+        } else {
+            false
+        }
+
+    override fun hashCode(): Int = id.hashCode()
 
     override fun toString(): String =
         "${paidSum ?: 0}$ / $totalSum$    $reason    $dueDate"
+
+    fun getDetails(): String = """
+        Total Sum: $totalSum
+        Paid Sum: ${paidSum.stringOrNone()}
+        Reason: $reason
+        Due Date: $dueDate
+        Type of payment: ${type.stringOrNone()}
+        IBAN: ${iban.stringOrNone()}
+        Address: ${address.stringOrNone()}
+        Institution: ${institution.stringOrNone()}
+        Status: ${status.stringOrNone()}
+    """.trimIndent()
+
+    fun sumToString(): String = "${paidSum ?: 0}$ / $totalSum$"
+
+    private fun <T> T?.stringOrNone(): String = this?.toString() ?: "-"
 }

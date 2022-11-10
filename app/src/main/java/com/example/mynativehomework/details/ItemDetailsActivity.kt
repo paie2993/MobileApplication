@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_item_details.*
 
 class ItemDetailsActivity : AppCompatActivity() {
 
-
     private val onUpdateClickListener: View.OnClickListener =
         View.OnClickListener(::setUpdateClickListenerActivity)
 

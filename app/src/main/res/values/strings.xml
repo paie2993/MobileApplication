@@ -43,7 +43,9 @@
     <string name="payment8_reason">Talked loudly in library</string>
     <string name="payment9_reason">Unpaid taxes</string>
     <string name="payment10_reason">Drove without safety belt</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="creates_new_due_payment">Creates new Due Payment</string>
+    <string name="update_due_payment" />
 
 </resources>

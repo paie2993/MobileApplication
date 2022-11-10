@@ -1,4 +1,4 @@
-package com.example.mynativehomework.update
+package com.example.mynativehomework.create
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,28 +6,25 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.app.NavUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mynativehomework.form.FormOperator
 import com.example.mynativehomework.ItemListActivity
 import com.example.mynativehomework.R
 import com.example.mynativehomework.data.Repository
-import com.example.mynativehomework.form.FormOperator
 import com.example.mynativehomework.form.FormRecyclerViewAdapter
-import com.example.mynativehomework.model.DuePayment
-import kotlinx.android.synthetic.main.activity_create_activity.fab
-import kotlinx.android.synthetic.main.activity_item_update.*
+import kotlinx.android.synthetic.main.activity_create_activity.*
 
-class UpdateActivity : AppCompatActivity() {
+class CreateActivity : AppCompatActivity() {
+
+    private val formOperator: FormOperator = FormOperator.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_update)
-
+        setContentView(R.layout.activity_create_activity)
         setDisplayHomeAsUp()
-
-        val formOperator = getFormOperator()
-        setupRecyclerView(update_form, formOperator)
+        setupRecyclerView(create_form)
 
         fab.setOnClickListener { view ->
-            if (formOperator.modifyRepository(view, Repository::updateDuePayment)) {
+            if (formOperator.modifyRepository(view, Repository::addDuePayment)) {
                 runHomeOptionBehaviour()
             }
         }
@@ -56,18 +53,7 @@ class UpdateActivity : AppCompatActivity() {
 
 
     //     configure recycler view
-    private fun setupRecyclerView(recyclerView: RecyclerView, formOperator: FormOperator) {
+    private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = FormRecyclerViewAdapter(formOperator.fields)
     }
-
-    // update specifics
-    private fun getFormOperator(): FormOperator {
-        val itemId = getItemId()
-        val duePayment = getDuePayment(itemId)
-        return FormOperator.create(duePayment)
-    }
-
-    private fun getItemId(): Int = intent.getStringExtra("item_id")!!.toInt()
-
-    private fun getDuePayment(id: Int): DuePayment? = Repository.find(id)
 }

@@ -9,8 +9,7 @@ import com.example.mynativehomework.R
 import com.example.mynativehomework.data.Repository
 import com.example.mynativehomework.model.DuePayment
 import kotlinx.android.synthetic.main.activity_item_details.*
-import kotlinx.android.synthetic.main.activity_item_details.view.*
-import kotlinx.android.synthetic.main.fragment_item_details.*
+import kotlinx.android.synthetic.main.fragment_item_details.view.*
 
 class ItemDetailFragment : Fragment() {
 
@@ -29,11 +28,11 @@ class ItemDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        root: ViewGroup?,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val rootView = inflater.inflate(item_detail, root, false)
-        item?.let { rootView.item_detail.text = it.toString() }
+    ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_item_details, container, false)
+        item?.let { rootView.item_detail.text = it.getDetails() }
         return rootView
     }
 }

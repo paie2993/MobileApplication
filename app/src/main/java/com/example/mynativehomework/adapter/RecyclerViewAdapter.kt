@@ -14,13 +14,7 @@ import com.example.mynativehomework.data.Repository
 import com.example.mynativehomework.model.DuePayment
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class RecyclerViewAdapter(
-    context: Context
-) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-
-    init {
-        Repository.populateRepository(context)
-    }
+class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     private val values: List<DuePayment>
         get() = Repository.data
@@ -39,8 +33,10 @@ class RecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        Log.d("Bind View Holder", "onBindViewHolder: position = $position, item = ${item.totalSum}")
-        holder.contentView.text = item.toString()
+        Log.i("Recycler View Adapter", "Size of the repository = ${values.size}")
+        holder.sumView.text = item.sumToString()
+        holder.descriptionView.text = item.reason
+        holder.dueDateView.text = item.dueDate
         with(holder.itemView) {
             tag = item
             setOnClickListener(onClickListener)
@@ -54,7 +50,8 @@ class RecyclerViewAdapter(
             .apply { putExtra("item_id", item.id.toString()) }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.id_text
-        val contentView: TextView = view.content
+        val sumView: TextView = view.sum
+        val descriptionView: TextView = view.description
+        val dueDateView: TextView = view.due_date
     }
 }
