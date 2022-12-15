@@ -1,10 +1,10 @@
 class FormText {
   static const String invalidInputWarning = 'Please enter some text';
 
-  static const String totalSumHint = 'ex. 100.00';
+  static const String totalSumHint = 'ex. 100';
   static const String totalSumHelper = 'Total Sum *';
 
-  static const String paidSumHint = 'ex. 50.00';
+  static const String paidSumHint = 'ex. 50';
   static const String paidSumHelper = 'Paid Sum';
   static const String paidSumCounterText = 'Less than Total Sum, can be empty';
 

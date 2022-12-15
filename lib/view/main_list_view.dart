@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/view/forms/update/update_form.dart';
+import 'package:flutter_crud/view_model/form_view_model.dart';
 import 'package:flutter_crud/view_model/main_list_viewmodel.dart';
 import 'package:observer/observer.dart';
 import 'dart:developer' as developer;
@@ -111,6 +112,7 @@ class MainListState extends State<MainListWidget> implements Observer {
   // functionality related to deleting an item from the list
   FloatingActionButton _deleteButton(Payments payment) =>
       FloatingActionButton.small(
+        heroTag: null,
         onPressed: () => _onDeleteTap(payment),
         child: const Icon(trailingItemIcon),
       );
@@ -132,15 +134,18 @@ class MainListState extends State<MainListWidget> implements Observer {
   }
 
   // functionality related to starting the update
-  void _handleLongPress(BuildContext context, Payments payment) =>
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const PaymentForm(
-            'Update payment',
-            UpdateFormWidget(),
-          ),
+  void _handleLongPress(BuildContext context, Payments payment) {
+    FormViewModel.setSelectedPayment(payment);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const PaymentForm(
+          'Update payment',
+          UpdateFormWidget(),
         ),
-      );
+      ),
+    );
+  }
 
   // functionality related to details modal from bottom of screen
   void _handleTap(BuildContext context, Payments payment) =>

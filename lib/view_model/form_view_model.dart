@@ -39,6 +39,10 @@ class FormViewModel with Observer {
 
   // ... until here
 
+  static void setSelectedPayment(final Payments? payment) {
+    _instance!.selectedPayment = payment;
+  }
+
   // related to the observer-observable pattern
   @override
   void update(Observable observable, Object arg) {}

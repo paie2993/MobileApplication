@@ -2,12 +2,14 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/database/database.dart';
+import 'package:flutter_crud/error_service/error_service.dart';
 import 'package:flutter_crud/repository/repository.dart';
 import 'package:flutter_crud/view/forms/add/add_form.dart';
 import 'package:flutter_crud/view/forms/payment_form.dart';
 import 'package:flutter_crud/view/main_list_view.dart';
 import 'package:flutter_crud/view_model/form_view_model.dart';
 import 'package:flutter_crud/view_model/main_list_viewmodel.dart';
+import 'package:observer/observer.dart';
 
 void main() {
   developer.log('Application is starting', name: 'main_list_viewmodel.dart');
@@ -15,26 +17,31 @@ void main() {
   var database = PaymentDatabase();
   WidgetsFlutterBinding.ensureInitialized();
 
-
   var repository = Repository(database);
 
   MainListViewModel.initialize(repository);
   FormViewModel.initialize(repository);
+  ErrorService.initialize();
 
-  runApp(const MaterialApp(title: 'Flutter', home: HomeListRoute()));
+  runApp(MaterialApp(title: 'Flutter', home: HomeListRoute()));
 }
 
 // represent the user-interactive application
-class HomeListRoute extends StatelessWidget {
-  const HomeListRoute({super.key});
+class HomeListRoute extends StatelessWidget with Observer {
+  HomeListRoute({super.key});
 
   static const String title = 'YouPay TM';
 
   static const String addButtonTooltip = 'Add New Payment';
   static const IconData addButtonIcon = Icons.add;
 
+  late final BuildContext? lastContext;
+
   @override
-  Widget build(BuildContext context) => _mainWidget(context);
+  Widget build(BuildContext context) {
+    lastContext = context;
+    return _mainWidget(context);
+  }
 
   // defined the widget hierarchy displayed on the main screen
   Scaffold _mainWidget(BuildContext context) => Scaffold(
@@ -48,6 +55,7 @@ class HomeListRoute extends StatelessWidget {
 
   // the floating action button leading to the 'add payment' form
   FloatingActionButton _addButton(BuildContext context) => FloatingActionButton(
+        heroTag: null,
         child: _addButtonIcon(),
         onPressed: () => _onAddPressedHandler(context),
       );
@@ -66,4 +74,23 @@ class HomeListRoute extends StatelessWidget {
           ),
         ),
       );
+
+  // dedicated to ErrorHandling and display to the user
+  @override
+  void update(Observable observable, Object arg) => _handleError();
+
+  void _handleError() {
+    var message = ErrorService.remove();
+
+    if (lastContext != null) {
+      var snackbar = SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+          label: 'Ok',
+          onPressed: () => {},
+        ),
+      );
+      ScaffoldMessenger.of(lastContext!).showSnackBar(snackbar);
+    }
+  }
 }

@@ -16,7 +16,8 @@ class Repository with Observable {
 
     future.then((value) {
       list = value;
-      developer.log('Fetched from database: $value', name: 'Repository');
+      developer.log('Fetched from database: $value',
+          name: 'Repository:_fetchPayments');
       notifyObservers(list); // when reading completes, notify observers
     });
   }
@@ -46,54 +47,26 @@ class Repository with Observable {
     return null;
   }
 
-  void add(Payments payment) {
-    // add to local list
-    list.add(payment);
-
+  Future<void> add(Payments payment) async {
     // add to database
-    database.add(payment);
+    await database.add(payment);
 
-    developer.log('Added payment: $payment', name: 'Repository');
-    notifyObservers(list);
+    // synchronize local list with database
+    _fetchPayments();
   }
 
-  void remove(int idToRemove) {
-    // remove from the local list
-    _removeFromList(idToRemove);
-
+  Future<void> remove(int idToRemove) async {
     // remove from the database
-    database.remove(idToRemove);
+    await database.remove(idToRemove);
 
-    notifyObservers(list);
+    // now synchronize local list with database, to ensure consistency
+    _fetchPayments();
   }
 
-  void _removeFromList(int idToRemove) {
-    for (var i = 0; i < list.length; i++) {
-      var current = list[i];
-      if (current.id == idToRemove) {
-        list.removeAt(i);
-        break;
-      }
-    }
-  }
-
-  void update(Payments payment) {
-    // modify in local list
-    _updateInList(payment);
-
+  Future<void> update(Payments payment) async {
     // modify in database
-    database.updateElement(payment);
+    await database.updateElement(payment);
 
-    notifyObservers(list);
-  }
-
-  void _updateInList(Payments payment) {
-    for (var i = 0; i < list.length; i++) {
-      var current = list[i];
-      if (current.id == payment.id) {
-        list[i] = payment;
-        break;
-      }
-    }
+    _fetchPayments();
   }
 }

@@ -103,15 +103,17 @@ abstract class PaymentFormState extends State<StatefulWidget> {
   // the definition of the submit button
   ElevatedButton _submitButton() => ElevatedButton(
         onPressed: () {
-          var result = execute();
+          if (_formKey.currentState!.validate()) {
+            var result = execute();
 
-          switch (result) {
-            case FormProtocol.success:
-              Navigator.pop(context);
-              break;
-            default:
-              _handleFailure(result);
-              break;
+            switch (result) {
+              case FormProtocol.success:
+                Navigator.pop(context);
+                break;
+              default:
+                _handleFailure(result);
+                break;
+            }
           }
         },
         child: const Text(_submitButtonText),

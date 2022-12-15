@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/resources/defaults/form_defaults.dart';
 import 'package:flutter_crud/view/forms/payment_form.dart';
-
+import 'dart:developer' as developer;
 import '../../../database/database.dart';
 
 class UpdateFormWidget extends StatefulWidget {
@@ -26,17 +27,42 @@ class UpdatePaymentFormState extends PaymentFormState {
   @override
   String execute() => viewModel.updatePayment();
 
+  // initializing the fields with values of the underlying payment (if possible)
   void _initializeTextFields() {
-    viewModel.totalSumController.text =
-        selectedPayment != null ? selectedPayment!.totalSum.toString() : '';
-    viewModel.paidSumController.text =
-        selectedPayment != null ? selectedPayment!.paidSum.toString() : '';
-    viewModel.reasonController.text =
-        selectedPayment != null ? selectedPayment!.reason.toString() : '';
-    viewModel.addressController.text =
-        selectedPayment != null ? selectedPayment!.address.toString() : '';
+    developer.log("Was definitely here");
+    _initializeTotalSum();
+    _initializePaidSum();
+    _initializeReason();
+    _initializeAddress();
+    _initializeIban();
+  }
 
+  void _initializeTotalSum() {
+    viewModel.totalSumController.text = selectedPayment != null
+        ? selectedPayment!.totalSum.toString()
+        : FormDefaults.empty;
+  }
+
+  void _initializePaidSum() {
+    viewModel.paidSumController.text = selectedPayment != null
+        ? selectedPayment!.paidSum.toString()
+        : FormDefaults.empty;
+  }
+
+  void _initializeReason() {
+    viewModel.reasonController.text = selectedPayment != null
+        ? selectedPayment!.reason.toString()
+        : FormDefaults.empty;
+  }
+
+  void _initializeAddress() {
+    viewModel.addressController.text = selectedPayment != null
+        ? selectedPayment!.address.toString()
+        : FormDefaults.empty;
+  }
+
+  void _initializeIban() {
     var iban = selectedPayment != null ? selectedPayment!.iban : '';
-    viewModel.ibanController.text = iban ?? '';
+    viewModel.ibanController.text = iban ?? FormDefaults.empty;
   }
 }
